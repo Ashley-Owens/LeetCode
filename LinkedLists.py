@@ -21,12 +21,11 @@ class LinkedList:
         # Populates SLL with initial values (if provided).
         if start_list is not None:
             for value in start_list:
-                self.add_front(value)
+                self.add_back(value)
 
     def __str__(self) -> str:
         """
-        Return content of singly linked list in human-readable form
-        DO NOT CHANGE THIS METHOD IN ANY WAY
+        Return content of singly linked list in human-readable form.
         """
         out = 'SLL ['
         if self.head.next != None:
@@ -47,6 +46,23 @@ class LinkedList:
         new = ListNode(value)
         new.next = self.head.next
         self.head.next = new
+
+    def add_back(self, value: object) -> None:
+        """
+        Adds a new node to the end of the list.
+        Args:
+            value (object): item being added to the LL
+        """
+        curr = self.head
+        new = SLNode(value)
+
+        # Iterates up to the last node.
+        while curr.next != None:
+            curr = curr.next
+        
+        # Adds new node behind the last node.
+        new.next = curr.next
+        curr.next = new
 
     def deleteNode(self, node):
         """
@@ -98,6 +114,27 @@ class LinkedList:
 
         return self.reverseRecur(temp, head)
 
+    def hasCycle(self, head):
+        """
+        Determines if a linked list contains a cycle. 
+        Utilizes the Tortoise and the Hare algorithm.
+        Args:
+            head (object): the first node in the list
+        Returns:
+            bool: True if a cycle is present, else False
+        """
+        try:
+            slow = head
+            fast = head.next
+            while slow is not fast:
+                slow = slow.next
+                fast = fast.next.next
+            return True
+        
+        # Handles the case with no cycle using an exception.
+        except:
+            return False
+
     def length(self) -> int:
         """
         Returns:
@@ -117,20 +154,20 @@ class LinkedList:
 if __name__ == "__main__":
 
     
-    list = LinkedList()
-    list.add_front('C')
-    list.add_front('B')
-    list.add_front('A')
-    print('\n# add_front example 1')
-    print(list)
+    # list = LinkedList()
+    # list.add_front('C')
+    # list.add_front('B')
+    # list.add_front('A')
+    # print('\n# add_front example 1')
+    # print(list)
 
     # list.reverseList(list.head)
     # print('\n# reverse example 1')
     # print(list)
 
-    list.reverseRecur(list.head.next)
-    print('\n# reverse example 2')
-    print(list)
+    # list.reverseRecur(list.head.next)
+    # print('\n# reverse example 2')
+    # print(list)
 
     # curr = list.head
     # for _ in range(list.length()-1):
@@ -139,6 +176,9 @@ if __name__ == "__main__":
     #         list.deleteNode(curr)
     # print('\n# remove node example')
     # print(list)
+
+    
+        
     
 
                 
