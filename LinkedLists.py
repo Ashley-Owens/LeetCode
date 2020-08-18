@@ -54,7 +54,7 @@ class LinkedList:
             value (object): item being added to the LL
         """
         curr = self.head
-        new = SLNode(value)
+        new = ListNode(value)
 
         # Iterates up to the last node.
         while curr.next != None:
@@ -135,6 +135,41 @@ class LinkedList:
         except:
             return False
 
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """
+        You are given two non-empty linked lists representing two non-negative integers. 
+        The digits are stored in reverse order and each of their nodes contain a single 
+        digit. Add the two numbers and return it as a linked list.
+        Args:
+            l1 (ListNode): first node in the list
+            l2 (ListNode): first node in the second list
+        Returns:
+            ListNode: Linked list object
+        """
+        # Initializes the carry variable.
+        carry = 0
+
+        # Assumes equal length lists.
+        while l1:
+
+            # Adds the two list integer values together.
+            node = l1.val + l2.val + carry
+
+            # Special case if there is a carry.
+            if node >= 10:
+                node -= 10
+                carry = 1
+                self.add_front(node)
+
+            else: 
+                self.add_front(node)
+                carry = 0
+            
+            # Advances to the next node.
+            l1, l2 = l1.next, l2.next
+
+        return lst3
+
     def length(self) -> int:
         """
         Returns:
@@ -177,8 +212,15 @@ if __name__ == "__main__":
     # print('\n# remove node example')
     # print(list)
 
-    
-        
+    lst1 = LinkedList([6, 5, 3, 1])
+    lst2 = LinkedList([5, 6, 4, 2])
+    lst3 = LinkedList()
+    lst3.addTwoNumbers(lst1.head.next, lst2.head.next)
+    print(lst3)
+
+
+
+
     
 
                 
