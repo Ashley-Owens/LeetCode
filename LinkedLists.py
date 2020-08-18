@@ -149,24 +149,25 @@ class LinkedList:
         # Initializes the carry variable.
         carry = 0
 
-        # Assumes equal length lists.
-        while l1:
-
-            # Adds the two list integer values together.
-            node = l1.val + l2.val + carry
+        # Continues summation until there is no carry or further values.
+        while l1 or l2 or carry:
+            
+            # Adds the two integer values and traverses to the next node.
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
 
             # Special case if there is a carry.
-            if node >= 10:
-                node -= 10
+            if carry >= 10:
+                self.add_front(carry%10)
                 carry = 1
-                self.add_front(node)
 
             else: 
-                self.add_front(node)
+                self.add_front(carry)
                 carry = 0
-            
-            # Advances to the next node.
-            l1, l2 = l1.next, l2.next
 
         return lst3
 
@@ -213,7 +214,7 @@ if __name__ == "__main__":
     # print(list)
 
     lst1 = LinkedList([6, 5, 3, 1])
-    lst2 = LinkedList([5, 6, 4, 2])
+    lst2 = LinkedList([6, 4, 2])
     lst3 = LinkedList()
     lst3.addTwoNumbers(lst1.head.next, lst2.head.next)
     print(lst3)
