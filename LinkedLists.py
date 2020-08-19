@@ -116,8 +116,8 @@ class LinkedList:
 
     def hasCycle(self, head):
         """
-        Determines if a linked list contains a cycle. 
-        Utilizes the Tortoise and the Hare algorithm.
+        Determines if a linked list contains a cycle utilizing 
+        the Tortoise and the Hare algorithm.
         Args:
             head (object): the first node in the list
         Returns:
