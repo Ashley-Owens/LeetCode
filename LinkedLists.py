@@ -7,9 +7,64 @@ class ListNode:
     """
     Creates a singly linked list node.
     """
-    def __init__(self, value):
+    def __init__(self, value=0, next=None):
         self.val = value
         self.next = None
+
+    def __str__(self):
+        """
+        Returns: contents of ListNode class in human readable form.
+        """
+        out = 'SLL ['
+        if self.next != None:
+            cur = self.next
+            out = out + str(self.val)
+            while cur != None:
+                out = out + ' -> ' + str(cur.val)
+                cur = cur.next
+        out = out + ']'
+        return out
+
+class Solution:
+    """
+    Creates methods for testing ListNodes without using LinkedList class.
+    """
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        """
+        Given a SLL, group all even indexed nodes together followed by odd indexed nodes.
+        Update the nodes in-place using O(1) space and O(n) time complexity.
+        Args:
+            head (ListNode): first node in the singly linked list
+        Returns:
+            ListNode: first node in the updated singly linked list
+        """
+        # Initializes head nodes and pointers for even and odd linked lists.
+        evens = evenHead = ListNode(0)
+        odds = oddHead = ListNode(0)
+        count = 0
+        
+        # Iterates through the linked list.
+        while head:
+            
+            # If the index is even, adds node to the evens LL.
+            if count % 2 == 0:
+                evens.next = head
+                evens = evens.next
+                
+            # If the index is odd, adds node to the odds LL.
+            else:
+                odds.next = head
+                odds = odds.next
+
+            count += 1
+            head = head.next
+        
+        # Attaches the odds LL to the end of the evens LL.
+        evens.next = oddHead.next
+        odds.next = None
+            
+        return evenHead.next
+    
 
 class LinkedList:
     def __init__(self, start_list=None):
@@ -85,7 +140,7 @@ class LinkedList:
             ListNode: new head node of the reversed SLL
         """
         # Initializes two nodes for traversing the SLL.
-        prev, curr = None, self.head.next
+        prev, curr = None, head
         
         # Iterates through the list, updating pointers.
         while curr:
@@ -168,7 +223,6 @@ class LinkedList:
             else: 
                 self.add_front(carry)
                 carry = 0
-
         return lst3
 
     def length(self) -> int:
@@ -186,18 +240,37 @@ class LinkedList:
 
         return count
 
+    def lengthRecur(self, curr=False) -> int:
+        """
+        Returns:
+            int: the number of nodes in the SLL
+        """
+        if curr is False:
+            curr = self.head.next
+        if curr is None:
+            return 0
+        return 1 + self.lengthRecur(curr.next)
+
+        
+
 
 if __name__ == "__main__":
 
     
-    # list = LinkedList()
-    # list.add_front('C')
-    # list.add_front('B')
-    # list.add_front('A')
-    # print('\n# add_front example 1')
-    # print(list)
+    list = LinkedList()
+    list.add_front('C')
+    list.add_front('B')
+    list.add_front('A')
+    print('\n# add_front example 1')
+    print(list)
 
-    # list.reverseList(list.head)
+    
+    print('\n# length iteration')
+    print(list.length())
+    print('\n# length recursion')
+    print(list.lengthRecur())
+
+    # list.reverseList(list.head.next)
     # print('\n# reverse example 1')
     # print(list)
 
@@ -213,15 +286,29 @@ if __name__ == "__main__":
     # print('\n# remove node example')
     # print(list)
 
-    lst1 = LinkedList([6, 5, 3, 1])
-    lst2 = LinkedList([6, 4, 2])
-    lst3 = LinkedList()
-    lst3.addTwoNumbers(lst1.head.next, lst2.head.next)
-    print(lst3)
+    # lst1 = LinkedList([6, 5, 3, 1])
+    # lst2 = LinkedList([6, 4, 2])
+    # lst3 = LinkedList()
+    # lst3.addTwoNumbers(lst1.head.next, lst2.head.next)
+    # print(lst3)
 
 
+    # # Creates a linked list using just the ListNode class.
+    # lst = ListNode(0)
+    # node1 = ListNode(1)
+    # node2 = ListNode(2)
+    # node3 = ListNode(3)
+    # node4 = ListNode(4)
+    # node5 = ListNode(5)
+    # lst.next = node1
+    # node1.next = node2
+    # node2.next = node3
+    # node3.next = node4
+    # node4.next = node5
+    # print(lst)
 
-
-    
+    # # Tests the oddEvenList solution.
+    # sol = Solution()
+    # print(sol.oddEvenList(lst.next))
 
                 
