@@ -1,6 +1,6 @@
 # CodePath Advanced Interview Prep Course
-# Linked List Practice Problems
-# 8/18/2020
+# LeetCode Linked List Practice Problems
+# 8/17/2020
 
 
 class ListNode:
@@ -64,6 +64,27 @@ class Solution:
         odds.next = None
             
         return evenHead.next
+
+    def hasCycle(self, head):
+        """
+        Determines if a linked list contains a cycle utilizing 
+        the Tortoise and the Hare algorithm.
+        Args:
+            head (object): the first node in the list
+        Returns:
+            bool: True if a cycle is present, else False
+        """
+        try:
+            slow = head
+            fast = head.next
+            while slow is not fast:
+                slow = slow.next
+                fast = fast.next.next
+            return True
+        
+        # Handles the case with no cycle using an exception.
+        except:
+            return False
     
 
 class LinkedList:
@@ -257,18 +278,18 @@ class LinkedList:
 if __name__ == "__main__":
 
     
-    list = LinkedList()
-    list.add_front('C')
-    list.add_front('B')
-    list.add_front('A')
-    print('\n# add_front example 1')
-    print(list)
+    # list = LinkedList()
+    # list.add_front('C')
+    # list.add_front('B')
+    # list.add_front('A')
+    # print('\n# add_front example 1')
+    # print(list)
 
     
-    print('\n# length iteration')
-    print(list.length())
-    print('\n# length recursion')
-    print(list.lengthRecur())
+    # print('\n# length iteration')
+    # print(list.length())
+    # print('\n# length recursion')
+    # print(list.lengthRecur())
 
     # list.reverseList(list.head.next)
     # print('\n# reverse example 1')
@@ -293,22 +314,36 @@ if __name__ == "__main__":
     # print(lst3)
 
 
-    # # Creates a linked list using just the ListNode class.
-    # lst = ListNode(0)
-    # node1 = ListNode(1)
-    # node2 = ListNode(2)
-    # node3 = ListNode(3)
-    # node4 = ListNode(4)
-    # node5 = ListNode(5)
-    # lst.next = node1
-    # node1.next = node2
-    # node2.next = node3
-    # node3.next = node4
-    # node4.next = node5
-    # print(lst)
+    # Creates a linked list using just the ListNode class.
+    lst = ListNode(0)
+    node1 = ListNode(1)
+    node2 = ListNode(2)
+    node3 = ListNode(3)
+    node4 = ListNode(4)
+    node5 = ListNode(5)
+    lst.next = node1
+    node1.next = node2
+    node2.next = node3
+    node3.next = node4
+    node4.next = node5
+    print(lst)
 
-    # # Tests the oddEvenList solution.
-    # sol = Solution()
-    # print(sol.oddEvenList(lst.next))
+    Tests the hasCycle solution.
+    lst = ListNode(0)
+    node1 = ListNode(3)
+    node2 = ListNode(2)
+    node3 = ListNode(0)
+    node4 = ListNode(-4)
+    lst.next = node1
+    node1.next = node2
+    node2.next = node3
+    node3.next = node4
+    node4.next = node2
+    sol = Solution()
+    print(sol.hasCycle(lst.next))
+
+    # Tests the oddEvenList solution.
+    sol = Solution()
+    print(sol.oddEvenList(lst.next))
 
                 
