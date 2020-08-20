@@ -2,6 +2,13 @@
 # LeetCode Linked List Practice Problems
 # 8/17/2020
 
+# Linked List Problem Solving Options
+# 1. Dummy head: useful if needing to return a list where changes might occur to head node (swapping, new list creation)
+# 2. Pointer bookkeeping: placing indicators for the pointers you'll use to solve the problem
+# 3. Reverse: could be helpful for performing arithmetic on LL (addTwoNums)
+# 4. Two-pointer: use for detecting cycles or possibly intersections 
+# 5. Multipass: pass through list a constant number of times to calculate something (length)
+
 
 class ListNode:
     """
@@ -29,6 +36,30 @@ class Solution:
     """
     Creates methods for testing ListNodes without using LinkedList class.
     """
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+        """
+        Find the node reference at which the intersection of two singly LL begins.
+        Args:
+            headA (ListNode): first node in list A
+            headB (ListNode): first node in list B
+        Returns:
+            ListNode: intersection node or None
+        """
+        # Checks for an empty list.
+        if not headA or not headB:
+            return None
+
+        # Sets pointers for LL iteration.
+        pA, pB = headA, headB
+
+        # Once list iteration completes, pointer switches to head of opposite 
+        # list and vice versa. This accounts for cases of differing list lengths.
+        while pA != pB:
+            pA = headB if pA == None else pA.next
+            pB = headA if pB  == None else pB.next
+
+        return pA
+
     def oddEvenList(self, head: ListNode) -> ListNode:
         """
         Given a SLL, group all even indexed nodes together followed by odd indexed nodes.
@@ -347,22 +378,44 @@ if __name__ == "__main__":
     # print(sol.swapPairs(lst.next))
    
 
-    # Tests the hasCycle method.
-    lst = ListNode(0)
-    node1 = ListNode(3)
-    node2 = ListNode(2)
-    node3 = ListNode(0)
-    node4 = ListNode(-4)
-    lst.next = node1
-    node1.next = node2
-    node2.next = node3
-    node3.next = node4
-    node4.next = node2
-    sol = Solution()
-    print(sol.hasCycle(lst.next))
+    # # Tests the hasCycle method.
+    # lst = ListNode(0)
+    # node1 = ListNode(3)
+    # node2 = ListNode(2)
+    # node3 = ListNode(0)
+    # node4 = ListNode(-4)
+    # lst.next = node1
+    # node1.next = node2
+    # node2.next = node3
+    # node3.next = node4
+    # node4.next = node2
+    # sol = Solution()
+    # print(sol.hasCycle(lst.next))
 
     # # Tests the oddEvenList solution.
     # sol = Solution()
     # print(sol.oddEvenList(lst.next))
 
+    # # Tests getIntersectionNode method.
+    # node1 = ListNode(1)
+    # node2 = ListNode(2)
+    # node3 = ListNode(3)
+    # node4 = ListNode(4)
+    # node1.next = node2
+    # node2.next = node3
+    # node3.next = node4
+    
+    # lst1 = ListNode(5)
+    # lst2 = ListNode(6)
+    # lst3 = ListNode(7)
+    # lst4 = node3
+    # lst5 = node4
+    # lst1.next = lst2
+    # lst2.next = lst3
+    # lst3.next = lst4
+    # print(node1)
+    # print(lst1)
+
+    # sol = Solution()
+    # print(sol.getIntersectionNode(node1, lst1))
                 
