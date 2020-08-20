@@ -74,17 +74,32 @@ class Solution:
         Returns:
             bool: True if a cycle is present, else False
         """
-        try:
-            slow = head
-            fast = head.next
-            while slow is not fast:
-                slow = slow.next
-                fast = fast.next.next
-            return True
-        
-        # Handles the case with no cycle using an exception.
-        except:
+        if not head or not head.next:
             return False
+
+        slow = head
+        fast = head.next
+
+        while fast and fast.next:
+            if fast == slow or fast.next == slow:
+                return True
+            
+            fast = fast.next.next
+            slow = slow.next
+        return False
+
+        # Second method using try/except to catch non-cycles
+        # try:
+        #     slow = head
+        #     fast = head.next
+        #     while slow is not fast:
+        #         slow = slow.next
+        #         fast = fast.next.next
+        #     return True
+        
+        # # Handles the case with no cycle using an exception.
+        # except:
+        #     return False
 
     def swapPairs(self, head: ListNode) -> ListNode:
         """
@@ -313,38 +328,38 @@ if __name__ == "__main__":
     # print(lst3)
 
 
-    # Creates a linked list using just the ListNode class.
-    lst = ListNode()
-    node1 = ListNode(1)
-    node2 = ListNode(2)
-    node3 = ListNode(3)
-    node4 = ListNode(4)
-    node5 = ListNode(5)
-    lst.next = node1
-    node1.next = node2
-    node2.next = node3
-    node3.next = node4
-    node4.next = node5
-    print(node1)
-
-    # Tests the swapPairs method.
-    sol = Solution()
-    print(sol.swapPairs(lst.next))
-   
-
-    # Tests the hasCycle method.
-    # lst = ListNode(0)
-    # node1 = ListNode(3)
+    # # Creates a linked list using just the ListNode class.
+    # lst = ListNode()
+    # node1 = ListNode(1)
     # node2 = ListNode(2)
-    # node3 = ListNode(0)
-    # node4 = ListNode(-4)
+    # node3 = ListNode(3)
+    # node4 = ListNode(4)
+    # node5 = ListNode(5)
     # lst.next = node1
     # node1.next = node2
     # node2.next = node3
     # node3.next = node4
-    # node4.next = node2
+    # node4.next = node5
+    # print(node1)
+
+    # # Tests the swapPairs method.
     # sol = Solution()
-    # print(sol.hasCycle(lst.next))
+    # print(sol.swapPairs(lst.next))
+   
+
+    # Tests the hasCycle method.
+    lst = ListNode(0)
+    node1 = ListNode(3)
+    node2 = ListNode(2)
+    node3 = ListNode(0)
+    node4 = ListNode(-4)
+    lst.next = node1
+    node1.next = node2
+    node2.next = node3
+    node3.next = node4
+    node4.next = node2
+    sol = Solution()
+    print(sol.hasCycle(lst.next))
 
     # # Tests the oddEvenList solution.
     # sol = Solution()
