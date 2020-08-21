@@ -3,10 +3,10 @@
 # 8/17/2020
 
 # Linked List Problem Solving Options
-# 1. Dummy head: useful if needing to return a list where changes might occur to head node (swapping, new list creation)
-# 2. Pointer bookkeeping: placing indicators for the pointers you'll use to solve the problem
-# 3. Reverse: could be helpful for performing arithmetic on LL (addTwoNums)
-# 4. Two-pointer: use for detecting cycles or possibly intersections 
+# 1. Sentinel head: useful if needing to return a list where changes might occur to head node (swapping, new list creation)
+# 2. Pointer bookkeeping: placing indicators for the pointers you'll use to iterate the linked list.
+# 3. Reverse: helpful for performing arithmetic on LL (addTwoNums) or checking for palindromes
+# 4. Two-pointer: use for detecting cycles or intersections 
 # 5. Multipass: pass through list a constant number of times to calculate something (length)
 
 
@@ -59,6 +59,48 @@ class Solution:
             pB = headA if pB  == None else pB.next
 
         return pA
+
+    def copyRandomList(self, head: ListNode) -> ListNode:
+        """
+        A linked list is given such that each node contains an additional random pointer
+        which could point to any node in the list or null. Return a deep copy of the list.
+        Each node contains a random pointer that points to the index position of another node.
+        Time complexity O(n), space complexity O(1).
+        Args:
+            head (ListNode): first node in the LL
+        Returns:
+            ListNode: deep copy of the LL
+        """
+        dic, prev, node = {}, None, head
+        
+        # Iterates through the original list.
+        while node:
+            
+            # Uses a dictionary to map original node to its clone.
+            if node not in dic:
+                dic[node] = ListNode(node.val, node.next, node.val)
+            
+            # Previous node points to the clone.
+            if prev:
+                prev.next = dic[node]
+
+            # If there is no prev, we are at the head node. Store it for later.
+            else: 
+                head = dic[node]
+
+            if node.random:
+
+                # If node.random points to a node that we have not yet encountered, store it in the dictionary.
+                if node.random not in dic:
+                    dic[node.random] = ListNode(node.random.val, node.random.next, node.random.random)
+
+                # Make the copy's random property point to the copy instead of the original.
+                dic[node].random = dic[node.random]
+
+            # Store prev and advance to the next node.
+            prev, node = dic[node], node.next
+
+        return head
 
     def oddEvenList(self, head: ListNode) -> ListNode:
         """
