@@ -1,9 +1,17 @@
 # CodePath Advanced Interview Prep Course
-# LeetCode Hash Table Practice Problems
+# LeetCode Hash Table and Heap Practice Problems
 # 8/21/2020
 
-# Hash Table Problem Solving Options
+# UMPIRE: Understand the problem, Match the problem to a data structure, write Pseudocode, Implement in code,
+# Recheck/Reflect, Evaluate your solution's time and space complexity.
 
+# Hash Table Problem Solving Options
+# 1. Use for quick accessing keys, values
+
+# Heap Problem Solving Options
+# 1. Use when you only need the top most/least frequent occurrences
+
+import heapq
 
 class Solution:
 
@@ -49,6 +57,38 @@ class Solution:
         
         return n == 1
 
+    def topKFrequent(self, words, k: int):
+        """
+        Given a non-empty list of words, return the k most frequent elements. Sort answer by frequency 
+        from highest to lowest. If two words have the same frequency, then the word with the lower 
+        alphabetical order comes first.
+        Args:
+            words (list): list of lowercase letters
+            k (int): 1 ≤ k ≤ number of unique elements
+        Returns:
+            list(str): alphabetized list
+        """
+        # Creates dictionary for storing words mapped to frequencies
+        d1, result, word_count_pairs = {}, [], []
+
+        # Populates dictionary with words: frequency.
+        for item in words:
+            d1[item] = d1.get(item, 0) +1
+
+        # Adds tuple pairing of count: word data to a list.
+        for word, count in d1.items():
+
+            # Uses negative count due to Python Min Heap DS and we need max heap values.
+            word_count_pairs.append((-count, word))
+        
+        # Adds count: word pairings to a min heap data structure.
+        heapq.heapify(word_count_pairs)
+        for _ in range(k):
+
+            # Grabs only the word in the pairs tuple.
+            result.append(heapq.heappop(word_count_pairs)[1])
+
+        return result
 
 
 
@@ -61,5 +101,11 @@ if __name__ == "__main__":
     # print(sol.isIsomorphic("paper", "title"))
 
 
-    # Tests Jewels in Stones method
-    print(sol.isHappy(2))
+    # # Tests isHappy method
+    # print(sol.isHappy(2))
+    # print(sol.isHappy(19))
+
+    # Tests topKFrequent Words Method
+    print(sol.topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], k = 2))
+    print(sol.topKFrequent(["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4))
+    print(sol.topKFrequent(["dog", "cat", "monkey", "dog", "cat", "monkey"], k = 2))
