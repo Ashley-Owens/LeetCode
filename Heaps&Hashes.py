@@ -136,9 +136,77 @@ class Solution:
 
         return pairs
 
+class MinHeap:
+    def __init__(self, start_heap=None):
+        """
+        Initializes a new MinHeap
+        """
+        self.heap = []
+
+        # populate MH with initial values (if provided)
+        # before using this feature, implement add() method
+        if start_heap:
+            for node in start_heap:
+                self.insert(node)
+
+    def __str__(self) -> str:
+        """
+        Return MH content in human-readable form
+        DO NOT CHANGE THIS METHOD IN ANY WAY
+        """
+        return 'HEAP ' + str(self.heap)
+
+    def is_empty(self) -> bool:
+        """
+        Return True if no elements in the heap, False otherwise
+        DO NOT CHANGE THIS METHOD IN ANY WAY
+        """
+        return len(self.heap) == 0
+
+    def insert(self, node: object) -> None:
+        """
+        Adds a new object to the MinHeap while maintaining min heap structure.
+        Args:
+            node (object): item to be added to the heap
+        """
+        # Saves the index position of the new node.
+        position = len(self.heap)
+        self.heap.append(node)
+
+        # Percolates node upwards to maintain min heap structure.
+        self.trickle_up(position)
+    
+    def trickle_up(self, position: int) -> None:
+        """
+        Recursively swaps nodes as needed to maintain min heap structure.
+        Args:
+            position (int): node index position in the heap
+        """
+        # Stops recursion at 0th index.
+        if position == 0:
+           return
+
+        # Index position of parent node.
+        j = (position - 1) // 2
+
+        # Obtains values for comparison.
+        parent = self.heap[j]
+        node = self.heap[position]
+        
+        # Swaps nodes if needed to maintain min heap structure.
+        if node < parent:
+            self.heap[position], self.heap[j] = self.heap[j], self.heap[position]
+            self.trickle_up(j)
+        return
+
+
 if __name__ == "__main__":
     
     sol = Solution()
+    min_heap = MinHeap()
+    min_heap.insert(2)
+    min_heap.insert(4)
+    min_heap.insert(1)
     
     # # Tests isIsomorphic method
     # print(sol.isIsomorphic("foo", "bar"))
