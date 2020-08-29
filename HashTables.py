@@ -90,7 +90,50 @@ class Solution:
 
         return result
 
+    def kSmallestPairs(self, nums1, nums2, k: int):
+        """
+        Define a pair of values which consists of one element from each array. Find the k pairs
+        with the smallest sums.
+        Args:
+            nums1 (list): sorted integer array
+            nums2 (list): sorted integer array
+            k (int): number of pairs to return
+        Returns:
+            list: a list of lists with the smallest pairs from each array
+        """
+        # Edge case for an empty list.
+        if not nums1 or not nums2:
+            return []
 
+        # Both lists are sorted, thus starts by storing the sum of the smallest 
+        # elements and each element's starting index.
+        heap = [(nums1[0] + nums2[0], 0, 0)]
+
+        # Stores a tuple of all indices visited between nums1 and nums2.
+        visited = set()
+
+        # Stores the smallest pair combinations from both lists.
+        output = []
+
+        # Continues looping until reaching k pairs or running out of heap elements.
+        while len(output) < k and heap:
+
+            # Val contains the sum of two list elements followed by their indices i.e. (7, 0, 2)
+            val = heapq.heappop(heap)
+
+            # Adds a tuple of smallest values to the result using the indices from val and heap DS for sorting.
+            output.append([nums1[val[1]], nums2[val[2]]])
+
+            # Checks for indices out of range or previously visited indices, adding current indices
+            # to the visited set and current sum of elements with their indices to the heap.
+            if val[1] < len(nums1) - 1 and (val[1] + 1, val[2]) not in visited:
+                visited.add((val[1] + 1, val[2]))
+                heapq.heappush(heap, (nums1[val[1] + 1] + nums2[val[2]], val[1] + 1, val[2]))
+            if val[2] < len(nums2) - 1 and (val[1], val[2] + 1) not in visited:
+                visited.add((val[1], val[2] + 1))
+                heapq.heappush(heap, (nums1[val[1]] + nums2[val[2] + 1], val[1], val[2] + 1))
+
+        return output
 
 if __name__ == "__main__":
     
@@ -105,7 +148,12 @@ if __name__ == "__main__":
     # print(sol.isHappy(2))
     # print(sol.isHappy(19))
 
-    # Tests topKFrequent Words Method
-    print(sol.topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], k = 2))
-    print(sol.topKFrequent(["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4))
-    print(sol.topKFrequent(["dog", "cat", "monkey", "dog", "cat", "monkey"], k = 2))
+    # # Tests topKFrequent Words Method
+    # print(sol.topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], k = 2))
+    # print(sol.topKFrequent(["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4))
+    # print(sol.topKFrequent(["dog", "cat", "monkey", "dog", "cat", "monkey"], k = 2))
+
+    # # Tests kSmallestPairs method
+    # print(sol.kSmallestPairs(nums1 = [1,7,11], nums2 = [2,4,6], k = 3))
+    # print(sol.kSmallestPairs(nums1 = [1,1,2], nums2 = [1,2,3], k = 2))
+    # print(sol.kSmallestPairs(nums1 = [1,2], nums2 = [3], k = 3))
