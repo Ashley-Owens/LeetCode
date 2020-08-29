@@ -2,11 +2,11 @@
 # LeetCode Hash Table and Heap Practice Problems
 # 8/21/2020
 
-# UMPIRE: Understand the problem, Match the problem to a data structure, write Pseudocode, Implement in code,
-# Recheck/Reflect, Evaluate your solution's time and space complexity.
+# UMPIRE: Understand the problem, Match the problem to one or more data structures, write Pseudocode,
+# Implement in code, Recheck/Reflect, Evaluate your solution's time and space complexity.
 
 # Hash Table Problem Solving Options
-# 1. Use for quick accessing keys, values
+# 1. Use for quick access to keys or values
 
 # Heap Problem Solving Options
 # 1. Use when you only need the top most/least frequent occurrences
@@ -93,7 +93,8 @@ class Solution:
     def kSmallestPairs(self, nums1, nums2, k: int):
         """
         Define a pair of values which consists of one element from each array. Find the k pairs
-        with the smallest sums.
+        with the smallest sums. Visualize input as a nums1 x nums2 matrix of sums. We just need
+        the sums in the top leftmost area of the matrix.
         Args:
             nums1 (list): sorted integer array
             nums2 (list): sorted integer array
@@ -105,35 +106,35 @@ class Solution:
         if not nums1 or not nums2:
             return []
 
-        # Both lists are sorted, thus starts by storing the sum of the smallest 
+        # Both lists are sorted, thus start by storing the sum of the smallest 
         # elements and each element's starting index.
         heap = [(nums1[0] + nums2[0], 0, 0)]
 
-        # Stores a tuple of all indices visited between nums1 and nums2.
-        visited = set()
-
         # Stores the smallest pair combinations from both lists.
-        output = []
+        pairs = []
+
+        def push(i, j):
+            """Adds indices to the heap."""
+            if i < len(nums1) and j < len(nums2):
+                heapq.heappush(heap, [nums1[i]+nums2[j], i, j])
 
         # Continues looping until reaching k pairs or running out of heap elements.
-        while len(output) < k and heap:
+        while len(pairs) < k and heap:
 
-            # Val contains the sum of two list elements followed by their indices i.e. (7, 0, 2)
-            val = heapq.heappop(heap)
+            # '_' contains the sum of two list elements followed by their indices i and j i.e. (7, 0, 2)
+            _, i, j = heapq.heappop(heap)
 
-            # Adds a tuple of smallest values to the result using the indices from val and heap DS for sorting.
-            output.append([nums1[val[1]], nums2[val[2]]])
+            # Adds a tuple of smallest values to the result using the indices from sorted heap DS.
+            pairs.append([nums1[i], nums2[j]])
 
-            # Checks for indices out of range or previously visited indices, adding current indices
-            # to the visited set and current sum of elements with their indices to the heap.
-            if val[1] < len(nums1) - 1 and (val[1] + 1, val[2]) not in visited:
-                visited.add((val[1] + 1, val[2]))
-                heapq.heappush(heap, (nums1[val[1] + 1] + nums2[val[2]], val[1] + 1, val[2]))
-            if val[2] < len(nums2) - 1 and (val[1], val[2] + 1) not in visited:
-                visited.add((val[1], val[2] + 1))
-                heapq.heappush(heap, (nums1[val[1]] + nums2[val[2] + 1], val[1], val[2] + 1))
+            # Adds current sum of elements with their indices to the heap.
+            push(i, j+1)
 
-        return output
+            # We only need elements from the top leftmost aspect of the matrix.
+            if j == 0:
+                push(i+1, j)
+
+        return pairs
 
 if __name__ == "__main__":
     
@@ -157,3 +158,4 @@ if __name__ == "__main__":
     # print(sol.kSmallestPairs(nums1 = [1,7,11], nums2 = [2,4,6], k = 3))
     # print(sol.kSmallestPairs(nums1 = [1,1,2], nums2 = [1,2,3], k = 2))
     # print(sol.kSmallestPairs(nums1 = [1,2], nums2 = [3], k = 3))
+    # print(sol.kSmallestPairs(nums1 = [2, 4, 6], nums2 = [1, 3, 5], k = 3))
