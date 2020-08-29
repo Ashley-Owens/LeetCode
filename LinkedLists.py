@@ -365,12 +365,12 @@ class LinkedList:
 if __name__ == "__main__":
 
     
-    # list = LinkedList()
-    # list.add_front('C')
-    # list.add_front('B')
-    # list.add_front('A')
-    # print('\n# add_front example 1')
-    # print(list)
+    list = LinkedList()
+    list.add_front('C')
+    list.add_front('B')
+    list.add_front('A')
+    print('\n# add_front example 1')
+    print(list)
 
     
     # print('\n# length iteration')
