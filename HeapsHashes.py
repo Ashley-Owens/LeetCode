@@ -191,10 +191,7 @@ class Solution:
                 return False
 
             # Implements stack ADT to determine matching brackets.
-            elif bracket_pairings[unmatched_brackets[-1]] == char:
-                unmatched_brackets.pop()
-
-            else:
+            elif bracket_pairings[unmatched_brackets.pop()] != char:
                 return False
 
         return len(unmatched_brackets) == 0
@@ -287,14 +284,14 @@ if __name__ == "__main__":
     
     sol = Solution()
     
-    # Creates a MinHeap
-    min_heap = MinHeap([10])
-    min_heap.insert(8)
-    min_heap.insert(5)
-    min_heap.insert(1)
-    min_heap.insert(6)
-    min_heap.insert(2)
-    print(min_heap)
+    # # Creates a MinHeap
+    # min_heap = MinHeap([10])
+    # min_heap.insert(8)
+    # min_heap.insert(5)
+    # min_heap.insert(1)
+    # min_heap.insert(6)
+    # min_heap.insert(2)
+    # print(min_heap)
     
     # # Tests isIsomorphic method
     # print(sol.isIsomorphic("foo", "bar"))
