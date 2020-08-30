@@ -171,18 +171,53 @@ class Solution:
         return len(wall) - max(gaps.values())
 
     def is_well_formed(self, string):
+        """
+        A string is well formed if for every "(" left parenthesis you have matching right one ")".
+        In the same way every ")" should have a preceding "(". 
+        Args:
+            string: a string comprised of any number/order of brackets
+        Returns:
+            bool: True if well formed, else False
+        """
         unmatched_brackets = []
         bracket_pairings =  {"(": ")", "{": "}", "[": "]"}
+        
         for char in string:
             if char in bracket_pairings:
                 unmatched_brackets.append(char)
+
+            # Edge case for incorrect chars.
             elif not unmatched_brackets: 
                 return False
+
+            # Implements stack ADT to determine matching brackets.
             elif bracket_pairings[unmatched_brackets[-1]] == char:
                 unmatched_brackets.pop()
+
             else:
                 return False
+
         return len(unmatched_brackets) == 0
+
+    def sort_list(self, almost_sorted_list, m):
+        """
+        Given an almost sorted array in which each number is less than m spots away from its
+        correctly sorted position, return a properly sorted array.
+        Args:
+            almost_sorted_list (list): a list of almost sorted elements
+            m (int): each item in the list is less than m spots away from proper location
+        Returns:
+            list: sorted array
+        """
+        min_heap, result = [], []
+
+        for elem in almost_sorted_list:
+            heapq.heappush(min_heap, elem)
+
+        for elem in almost_sorted_list:
+            result.append(heapq.heappop(min_heap))
+            
+        return result
 
 
 class MinHeap:
@@ -289,3 +324,6 @@ if __name__ == "__main__":
     # # Tests is_well_formed method
     # print(sol.is_well_formed("[()]"))
     # print(sol.is_well_formed("{)"))
+
+    # # Tests sort_list method
+    # print(sol.sort_list([3, 2, 1, 4, 6, 5], 3))
