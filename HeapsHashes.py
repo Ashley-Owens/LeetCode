@@ -173,7 +173,7 @@ class Solution:
     def is_well_formed(self, string):
         """
         A string is well formed if for every "(" left parenthesis you have matching right one ")".
-        In the same way every ")" should have a preceding "(". 
+        In the same way every ")" should have a preceding "(". Runtime and space complexity is O(n).
         Args:
             string: a string comprised of any number/order of brackets
         Returns:
@@ -199,7 +199,7 @@ class Solution:
     def sort_list(self, almost_sorted_list, m):
         """
         Given an almost sorted array in which each number is less than m spots away from its
-        correctly sorted position, return a properly sorted array.
+        correctly sorted position, return a properly sorted array. Runtime is O(n log m).
         Args:
             almost_sorted_list (list): a list of almost sorted elements
             m (int): each item in the list is less than m spots away from proper location
@@ -208,10 +208,16 @@ class Solution:
         """
         min_heap, result = [], []
 
-        for elem in almost_sorted_list:
+        for elem in almost_sorted_list[:m]:
             heapq.heappush(min_heap, elem)
 
-        for elem in almost_sorted_list:
+        # In the second for loop, only add elements starting 
+        # from the mth item in the almost sorted list.
+        for elem in almost_sorted_list[m:]:
+            heapq.heappush(min_heap, elem)
+            result.append(heapq.heappop(min_heap))
+
+        for i in range(len(min_heap)):
             result.append(heapq.heappop(min_heap))
             
         return result
@@ -323,4 +329,4 @@ if __name__ == "__main__":
     # print(sol.is_well_formed("{)"))
 
     # # Tests sort_list method
-    # print(sol.sort_list([3, 2, 1, 4, 6, 5], 3))
+    print(sol.sort_list([3, 2, 1, 4, 6, 5], 3))
