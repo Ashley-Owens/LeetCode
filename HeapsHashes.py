@@ -6,10 +6,15 @@
 # Implement in code, Recheck/Reflect, Evaluate your solution's time and space complexity.
 
 # Hash Table Problem Solving Options
-# 1. Use for quick access to keys or values
+# 1. Use for quick access to keys or values. O(1) for lookup, insertion, and deletion, worst
+#    case is O(n) due to collisions.
 
 # Heap Problem Solving Options
-# 1. Use when you only need the top most/least frequent occurrences
+# 1. Use when you only need the top k most/least frequent occurrences and when fast lookup,
+#    deletion, or searches don't matter.
+# 2. Optimize building a heap by heapifying a list (O(n)) instead of inserting n times. 
+#    Insertion and deletion are O(log n)
+
 
 import heapq
 
@@ -136,6 +141,36 @@ class Solution:
 
         return pairs
 
+    def leastBricks(self, wall) -> int:
+        """
+        A brick wall is represented by a list of rows. Each row is a list of integers representing the width
+        of each brick in this row from left to right. The bricks have the same height but different widths. Draw  
+        a vertical line from the top to the bottom while crossing the least number of bricks.
+        Args:
+            wall (list): matrix of integers signifying width of each brick
+        Returns:
+            int: number of bricks crossed
+        """
+        # Stores the number of gaps at each index of a row.
+        gaps = {}
+
+        for row in wall:
+            total = 0
+
+            # A line can't be drawn at the wall's edges.
+            for brick in row[:-1]:
+                total += brick
+
+                # Stores the row index: gap data in hash map.
+                gaps[total] = gaps.get(total, 0) +1
+        
+        # Edge case for a wall with no gaps.
+        if len(gaps) < 1:
+            return len(wall)
+
+        return len(wall) - max(gaps.values())
+
+
 class MinHeap:
     def __init__(self, start_heap=None):
         """
@@ -143,8 +178,7 @@ class MinHeap:
         """
         self.heap = []
 
-        # populate MH with initial values (if provided)
-        # before using this feature, implement add() method
+        # Populates MH with initial values (if provided)
         if start_heap:
             for node in start_heap:
                 self.insert(node)
@@ -203,10 +237,13 @@ class MinHeap:
 if __name__ == "__main__":
     
     sol = Solution()
-    min_heap = MinHeap()
-    min_heap.insert(2)
-    min_heap.insert(4)
-    min_heap.insert(1)
+    
+    # # Creates a MinHeap
+    # min_heap = MinHeap()
+    # min_heap.insert(2)
+    # min_heap.insert(4)
+    # min_heap.insert(1)
+    # print(min_heap)
     
     # # Tests isIsomorphic method
     # print(sol.isIsomorphic("foo", "bar"))
@@ -227,3 +264,8 @@ if __name__ == "__main__":
     # print(sol.kSmallestPairs(nums1 = [1,1,2], nums2 = [1,2,3], k = 2))
     # print(sol.kSmallestPairs(nums1 = [1,2], nums2 = [3], k = 3))
     # print(sol.kSmallestPairs(nums1 = [2, 4, 6], nums2 = [1, 3, 5], k = 3))
+
+    # Tests leastBricks method
+    print(sol.leastBricks([[1, 2, 3], [1, 3, 2], [4, 1, 1]]))
+    print(sol.leastBricks([[3], [3], [3]]))
+    print(sol.leastBricks([[1,2,2,1], [3,1,2], [1,3,2], [2,4], [3,1,2], [1,3,1,1]]))
