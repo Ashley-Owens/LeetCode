@@ -170,6 +170,20 @@ class Solution:
 
         return len(wall) - max(gaps.values())
 
+    def is_well_formed(self, string):
+        unmatched_brackets = []
+        bracket_pairings =  {"(": ")", "{": "}", "[": "]"}
+        for char in string:
+            if char in bracket_pairings:
+                unmatched_brackets.append(char)
+            elif not unmatched_brackets: 
+                return False
+            elif bracket_pairings[unmatched_brackets[-1]] == char:
+                unmatched_brackets.pop()
+            else:
+                return False
+        return len(unmatched_brackets) == 0
+
 
 class MinHeap:
     def __init__(self, start_heap=None):
@@ -238,12 +252,14 @@ if __name__ == "__main__":
     
     sol = Solution()
     
-    # # Creates a MinHeap
-    # min_heap = MinHeap()
-    # min_heap.insert(2)
-    # min_heap.insert(4)
-    # min_heap.insert(1)
-    # print(min_heap)
+    # Creates a MinHeap
+    min_heap = MinHeap([10])
+    min_heap.insert(8)
+    min_heap.insert(5)
+    min_heap.insert(1)
+    min_heap.insert(6)
+    min_heap.insert(2)
+    print(min_heap)
     
     # # Tests isIsomorphic method
     # print(sol.isIsomorphic("foo", "bar"))
@@ -265,7 +281,11 @@ if __name__ == "__main__":
     # print(sol.kSmallestPairs(nums1 = [1,2], nums2 = [3], k = 3))
     # print(sol.kSmallestPairs(nums1 = [2, 4, 6], nums2 = [1, 3, 5], k = 3))
 
-    # Tests leastBricks method
-    print(sol.leastBricks([[1, 2, 3], [1, 3, 2], [4, 1, 1]]))
-    print(sol.leastBricks([[3], [3], [3]]))
-    print(sol.leastBricks([[1,2,2,1], [3,1,2], [1,3,2], [2,4], [3,1,2], [1,3,1,1]]))
+    # # Tests leastBricks method
+    # print(sol.leastBricks([[1, 2, 3], [1, 3, 2], [4, 1, 1]]))
+    # print(sol.leastBricks([[3], [3], [3]]))
+    # print(sol.leastBricks([[1,2,2,1], [3,1,2], [1,3,2], [2,4], [3,1,2], [1,3,1,1]]))
+
+    # # Tests is_well_formed method
+    # print(sol.is_well_formed("[()]"))
+    # print(sol.is_well_formed("{)"))
