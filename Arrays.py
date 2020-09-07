@@ -32,13 +32,20 @@ class Solution:
             return []
           
         for i in range(0, len(movieDuration) - 2):
+
+            # First pointer tracked.
             curr = [movieDuration[i]]
-            for j in range(i + 1, len(movieDuration) - 1):
+
+            # Second pointer iterates through remainder of array.
+            for j in range(i + 1, len(movieDuration)):
                 if curr[0] + movieDuration[j] <= d:  
                     curr.append(movieDuration[j])
                     break
+            
+            # Updates result with the largest pair.
             if sum(result) < sum(curr):
                 result = curr.copy()
+                
         return result
 
 
@@ -49,3 +56,5 @@ if __name__ == "__main__":
 
     # Tests moviesOnFlight method
     print(sol.moviesOnFlight(250, [90, 85, 75, 60, 120, 150, 125]))
+    print(sol.moviesOnFlight(25, [90, 85, 75, 60, 120, 150, 125]))
+    print(sol.moviesOnFlight(250, [0]))
