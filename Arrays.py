@@ -74,7 +74,6 @@ class Solution:
             days -= 1
         
         return states
-        
 
     def generalizedGCD(self, num, arr):
     # WRITE YOUR CODE HERE
@@ -106,11 +105,12 @@ if __name__ == "__main__":
     # print(sol.moviesOnFlight(250, [0]))
 
     
-    # # Tests generalizedGCD
-    # print(sol.generalizedGCD(5, [2, 3, 4, 5, 6]))
-    # print(sol.generalizedGCD(5, [2, 4, 6, 8, 10]))
+    # Tests generalizedGCD
+    print(sol.generalizedGCD(5, [2, 3, 4, 5, 6]))
+    print(sol.generalizedGCD(5, [2, 4, 6, 8, 10]))
 
-    print(sol.cellCompete([1, 0, 0, 0, 0, 1, 0, 0], 1))
-    # Answer = [0, 1, 0, 0, 1, 0, 1, 0]
-    print(sol.cellCompete([1, 1, 1, 0, 1, 1, 1, 1], 2))
-    # Answer = [0, 0, 0, 0, 0, 1, 1, 0]
+    # # Tests cellCompete method
+    # print(sol.cellCompete([1, 0, 0, 0, 0, 1, 0, 0], 1))
+    # # Answer = [0, 1, 0, 0, 1, 0, 1, 0]
+    # print(sol.cellCompete([1, 1, 1, 0, 1, 1, 1, 1], 2))
+    # # Answer = [0, 0, 0, 0, 0, 1, 1, 0]
