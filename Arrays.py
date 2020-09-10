@@ -52,7 +52,7 @@ class Solution:
         """
         Each day, for each cell, if its neighbours are both active or both inactive, the cell 
         becomes inactive the next day, otherwise it becomes active the next day. The two cells on
-        the ends have single adjacent cell, so the other adjacent cell is assumsed to be always inactive.   
+        the ends have single adjacent cell, so the other adjacent cell is assumed to be always inactive.   
         Args:
             states (list): array of 0's and 1's representing active/inactive cells
             days (int): number of days to update the array
@@ -64,9 +64,12 @@ class Solution:
         
         # Uses bitwise XOR operator to update cells
         while days > 0:
+
+            # Updates the cells on each end.
             temp[0] = False ^ states[1]
             temp[n-1] = False ^ states[n-2]
             
+            # Updates the inner cells.
             for i in range(1, n-1):
                 temp[i] = states[i-1] ^ states[i+1]
             
@@ -76,8 +79,14 @@ class Solution:
         return states
 
     def generalizedGCD(self, num, arr):
-    # WRITE YOUR CODE HERE
-    
+        """
+        Iterates through an array and finds the GCD between two numbers using a helper method.
+        Args:
+            num (int): length of array
+            arr (list): list of integers
+        Returns:
+            int: the greatest common divisor
+        """
         n1 = arr[0]
         n2 = arr[1]
         gcd = self.findGCD(n1, n2)
@@ -89,10 +98,72 @@ class Solution:
     
     
     def findGCD(self, n1, n2):
+        """
+        Helper method implements the Euclidian algorithm to find H.C.F. of two numbers. 
+        Args:
+            n1 (int): first number
+            n2 (int): second number
+        Returns:
+            int: the great common divisor of two numbers
+        """
         while n2:
             n1, n2 = n2, n1 % n2
         
         return n1
+
+    def numPlayers(self, cutOffRank, num, scores):
+        if not scores:
+            return 0
+
+        count = 0
+        pos = 1
+        ranks = []
+        scores.sort(reverse=True)
+        
+        for i, j in enumerate(scores):
+            
+            if j == 0:
+                ranks.append(None)
+            
+            elif i == 0:
+                ranks.append(pos)
+            
+            elif j == scores[i-1]:
+                ranks.append(pos)
+
+            else:
+                pos += 1
+                ranks.append(pos)
+        
+        for pos in ranks:
+            if pos == None:
+                continue
+            if pos <= cutOffRank:
+                count += 1
+        
+        print(ranks)
+        return count
+
+    def chooseFlask(self, numOrders, requirements, flaskTypes, totalMarks, markings):
+
+        losses, flaskOptions = 0, []
+        for i in range(numOrders):
+        
+            for j in range(totalMarks):
+        
+                if markings[j] in flaskOptions:
+                    if markings[j][1] < requirements[i]:
+                        flaskOptions.remove(markings[j])
+                        
+                elif markings[j][1] >= requirements[i]:
+                    flaskOptions.append(markings[j])
+        
+        print(flaskOptions)
+        flaskOptions.sort()
+
+        return flaskOptions[0]
+
+
 
 
 if __name__ == "__main__":
@@ -105,12 +176,17 @@ if __name__ == "__main__":
     # print(sol.moviesOnFlight(250, [0]))
 
     
-    # Tests generalizedGCD
-    print(sol.generalizedGCD(5, [2, 3, 4, 5, 6]))
-    print(sol.generalizedGCD(5, [2, 4, 6, 8, 10]))
+    # # Tests generalizedGCD
+    # print(sol.generalizedGCD(5, [2, 3, 4, 5, 6]))
+    # print(sol.generalizedGCD(5, [2, 4, 6, 8, 10]))
 
     # # Tests cellCompete method
     # print(sol.cellCompete([1, 0, 0, 0, 0, 1, 0, 0], 1))
     # # Answer = [0, 1, 0, 0, 1, 0, 1, 0]
     # print(sol.cellCompete([1, 1, 1, 0, 1, 1, 1, 1], 2))
     # # Answer = [0, 0, 0, 0, 0, 1, 1, 0]
+
+
+    # print(sol.numPlayers(0, 4, [0, 0, 0, 0]))
+
+    print(sol.chooseFlask(4, [4, 6, 6, 7], 3, 9, [[0, 3], [0, 5], [0, 7], [1, 6], [1, 8], [1, 9], [2, 3], [2, 5], [2, 6]]))
