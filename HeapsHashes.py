@@ -196,6 +196,29 @@ class Solution:
 
         return len(unmatched_brackets) == 0
 
+    def arrayManipulation(self, n, queries):
+        """
+        Starting with a 1-indexed array of zeros and a list of operations, for each operation add a value to each of the array 
+        element between two given indices, inclusive. Once all operations have been performed, return the maximum value in the array. 
+        Args:
+            n (int): length of the array of zeros
+            queries (matrix):  integers a, b and k are the left index, right index and summand. 
+        Returns:
+            [type]: max array value after completing summations
+        """
+        # Brute force method using dictionaries, too slow.
+        d = {}
+        
+        for lst in queries:
+            for i in range(lst[0], lst[1]+1):
+                d[i] = d.get(i, 0) + lst[2]
+        return max(d.values())
+
+        # Alternative method parses the input in the main function to obtain the 'm' value, 
+        # which isn't provided to the actual function. See below.
+
+
+
     def sort_list(self, almost_sorted_list, m):
         """
         Given an almost sorted array in which each number is less than m spots away from its
@@ -329,4 +352,25 @@ if __name__ == "__main__":
     # print(sol.is_well_formed("{)"))
 
     # # Tests sort_list method
-    print(sol.sort_list([3, 2, 1, 4, 6, 5], 3))
+    # print(sol.sort_list([3, 2, 1, 4, 6, 5], 3))
+
+    # Tests Array Manipulation method.
+    queries = [[1, 1, 0], [1, 2, 5], [3, 4, 100]]
+    print(sol.arrayManipulation(3, queries))
+
+    # # HackerRank alternate approach in the main() function
+    # heap = []
+    # # Parses file input from HackerRank
+    # n, m = [int(v) for v in input().split()]
+
+    # for _ in range(m):
+    #     a, b, k = [int(v) for v in input().split()]
+    #     heapq.heappush(heap, (a, +k))
+    #     heapq.heappush(heap, (b+1, -k))
+
+    # mr, cr = 0, 0
+    # while len(heap) > 0:
+    #     item = heapq.heappop(heap)
+    #     cr += item[1]
+    #     mr = max(mr, cr)
+    
