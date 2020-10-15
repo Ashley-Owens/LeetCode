@@ -8,7 +8,7 @@ def cutRod(prices, n, cost):
         cost (int): cost to be deducted for cuts
 
     Returns:
-        [type]: [description]
+        int: the maximum value 
     """
     val = [0] * (n+1)
     
