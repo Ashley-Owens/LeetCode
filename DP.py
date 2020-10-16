@@ -90,7 +90,46 @@ def makeChange(V, A):
              
     return C
     
-A = 20
-V = [1, 5]
+# A = 20
+# V = [1, 5]
+# print(makeChange(V, A))
 
-print(makeChange(V, A))
+
+def makeTable(P, W, maxW):
+    """Function generates a DP table to determine the maximum total price of items you should select 
+    based on individual item weight compared to a predefined weight capacity. Use for knapsack problems.
+
+    Args:
+        P (array): prefill the 0th index with a zero, an array of each item's price 
+        W (array): pre-feill the 0th index with a zero, an array of each item's weight
+        maxW (int): max weight the knapsack will hold
+    """
+    
+    table = [[0 for i in range(maxW+1)] for j in range(len(W))]	
+    print(table)
+   
+    # Populates matrix, storing maximum prices obtainable in each row (W[i]).
+    for i in range(len(W)): 
+	  
+	  # Columns: total number of subproblems or max weight per person
+        for j in range(maxW+1):
+		
+            # Populates first row and column with zeros
+            if j == 0 or i ==0:
+                table[i][j] = 0
+                print(table)
+		
+            # If the item weight is larger than the capacity, take the previously determined price per carry weight. 
+            elif W[i] > j:
+                table[i][j] = table[i-1][j]
+            # Calculates max price/weight based on previous v. current values
+            else:
+                table[i][j] = max(P[i]+ table[i-1][j-W[i]], table[i-1][j])
+    
+    return table
+
+
+maxW = 8
+P = [0, 1, 2, 5, 6]
+W = [0, 2, 3, 4, 5]
+print(makeTable(P, W, maxW))
