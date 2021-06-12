@@ -1,6 +1,7 @@
 # CodePath Advanced Interview Prep Course
 # LeetCode List/Array Practice Problems
 # 9/7/2020
+# 6/12/2021
 
 # UMPIRE: Understand the problem, Match the problem to one or more data structures, write Pseudocode,
 # Implement in code, Recheck/Reflect, Evaluate your solution's time and space complexity.
@@ -161,8 +162,42 @@ class Solution:
         print(flaskOptions)
         flaskOptions.sort()
 
-        return flaskOptions[0]
+        return flaskOptions[0] 
 
+    def longest_subsequence(self, arr):
+        """
+        Longest Consecutive Subsequence: Given an unsorted array of integers, 
+        we want to find the length of the longest subsequence such that elements 
+        in the subsequence are consecutive integers. The consecutive numbers can 
+        be in any order.
+        Args:
+            arr (list): list of integers
+        Returns:
+            int: length of the longest subsequence
+        """
+        # Edge cases
+        if len(arr) <= 1:
+            return len(arr)
+
+        # Sort the array O(n log(n))
+        arr.sort()
+        curr = 0
+        longest = 0
+        
+        # Loop through the array O(n)
+        for i in range(len(arr)):
+            if arr[i] == arr[i-1]:
+                continue
+            
+            elif arr[i] - arr[i-1] == 1:
+                curr += 1
+                        
+            else:
+                longest = max(curr, longest)
+                curr = 1
+        
+        # O(n log(n)) time and O(1) space complexity
+        return longest
 
 
 
@@ -189,4 +224,7 @@ if __name__ == "__main__":
 
     # print(sol.numPlayers(0, 4, [0, 0, 0, 0]))
 
-    print(sol.chooseFlask(4, [4, 6, 6, 7], 3, 9, [[0, 3], [0, 5], [0, 7], [1, 6], [1, 8], [1, 9], [2, 3], [2, 5], [2, 6]]))
+    # print(sol.chooseFlask(4, [4, 6, 6, 7], 3, 9, [[0, 3], [0, 5], [0, 7], [1, 6], [1, 8], [1, 9], [2, 3], [2, 5], [2, 6]]))
+
+    # print(sol.longest_subsequence([36, 41, 56, 35, 44, 33, 34, 43, 92, 32, 42]))
+    # solution = 5
