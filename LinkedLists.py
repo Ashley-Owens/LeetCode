@@ -1,6 +1,7 @@
 # CodePath Advanced Interview Prep Course
 # LeetCode Linked List Practice Problems
 # 8/17/2020
+# 6/20/2021
 
 # Linked List Problem Solving Options
 # 1. Sentinel head: useful if needing to return a list where changes might occur to head node (swapping, new list creation)
@@ -193,8 +194,35 @@ class Solution:
             prev.next, after.next, node.next = after, node, after.next
             prev = node
         return self.next
-
     
+    def palindrome(self, head: ListNode) -> ListNode:
+        """
+        Given a linked list, determine if it is a palindrome.
+        Time complexity O(n), space complexity is O(n).
+        Args:
+            head (ListNode): first item in the LL
+        Returns:
+            bool: True if palidrome, else False
+        """
+        # Utilizes a stack data type then compares values.
+        stack = []
+        node = head
+
+        # Stores items on the stack
+        while node:
+            stack.insert(0, node.val)
+            node = node.next
+
+        # Compares stack to current list.
+        i = 0
+        while head:
+            if head.val != stack[i]:
+                return False
+            head = head.next
+            i += 1
+        return True
+        
+
 class LinkedList:
     def __init__(self, start_list=None):
         """
@@ -363,14 +391,13 @@ class LinkedList:
 
 
 if __name__ == "__main__":
-
     
-    list = LinkedList()
-    list.add_front('C')
-    list.add_front('B')
-    list.add_front('A')
-    print('\n# add_front example 1')
-    print(list)
+    # list = LinkedList()
+    # list.add_front('C')
+    # list.add_front('B')
+    # list.add_front('A')
+    # print('\n# add_front example 1')
+    # print(list)
 
     
     # print('\n# length iteration')
@@ -420,7 +447,7 @@ if __name__ == "__main__":
     # print(sol.swapPairs(lst.next))
    
 
-    # # Tests the hasCycle method.
+    # Tests the hasCycle method.
     # lst = ListNode(0)
     # node1 = ListNode(3)
     # node2 = ListNode(2)
@@ -431,6 +458,7 @@ if __name__ == "__main__":
     # node2.next = node3
     # node3.next = node4
     # node4.next = node2
+    # # print(lst)
     # sol = Solution()
     # print(sol.hasCycle(lst.next))
 
@@ -460,4 +488,31 @@ if __name__ == "__main__":
 
     # sol = Solution()
     # print(sol.getIntersectionNode(node1, lst1))
-                
+    
+
+    # # Tests the palindrome method: result is True
+    # lst = ListNode('a')
+    # node1 = ListNode('s')
+    # node2 = ListNode('h')
+    # node3 = ListNode('s')
+    # node4 = ListNode('a')
+    # lst.next = node1
+    # node1.next = node2
+    # node2.next = node3
+    # node3.next = node4
+    
+    # Tests the palindrome method: result is False
+    lst = ListNode('a')
+    node1 = ListNode('x')
+    node2 = ListNode('h')
+    node3 = ListNode('s')
+    node4 = ListNode('a')
+    lst.next = node1
+    node1.next = node2
+    node2.next = node3
+    node3.next = node4
+
+    sol = Solution()
+    print(sol.palindrome(lst))
+
+
