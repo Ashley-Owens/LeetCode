@@ -4,7 +4,7 @@
 # 6/20/2021
 
 # Linked List Problem Solving Options
-# 1. Sentinel head: useful if needing to return a list where changes might occur to head node (swapping, new list creation)
+# 1. Sentinel head: useful if needing to return a list where changes might occur to head node (swapping, new list creation, merging two lists).
 # 2. Pointer bookkeeping: placing indicators for the pointers you'll use to iterate the linked list.
 # 3. Reverse: helpful for performing arithmetic on LL (addTwoNums) or checking for palindromes
 # 4. Two-pointer: use for detecting cycles or intersections 
@@ -37,6 +37,37 @@ class Solution:
     """
     Creates methods for testing ListNodes without using LinkedList class.
     """
+    def swapNodesInPairs(self, head):
+        """
+        Given a linked list, swap every two adjacent nodes and return its head. 
+        You must solve the problem without modifying the values in the list's nodes.
+        Time complexity: O(n)
+        Space complexity: O(n)
+        Args:
+            head (node): head node of SLL
+        Returns:
+            node: head node of the swapped elements SLL
+        """
+        if not head or not head.next:
+            return head
+        
+        dummy = prev = ListNode(0)
+        dummy.next = head
+        
+        while head and head.next:
+            # Nodes to be swapped are head and head2
+            head2 = head.next
+
+            # Swapping
+            head.next, head2.next = head.next.next, head
+            prev.next = head2
+
+            # Reinitialize two nodes for next swap
+            prev = head
+            head = head.next
+        return dummy.next
+    
+    
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
         """
         Find the node reference at which the intersection of two singly LL begins.
@@ -210,17 +241,59 @@ class Solution:
 
         # Stores items on the stack
         while node:
-            stack.insert(0, node.val)
+            stack.append(node.val)
             node = node.next
 
         # Compares stack to current list.
-        i = 0
+        i = len(stack) -1
         while head:
             if head.val != stack[i]:
                 return False
             head = head.next
-            i += 1
+            i -= 1
         return True
+
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """
+        You are given two non-empty linked lists representing two non-negative integers. 
+        The digits are stored in reverse order and each of their nodes contain a single 
+        digit. Add the two numbers and return it as a linked list.
+        Args:
+            l1 (ListNode): first node in the list
+            l2 (ListNode): first node in the second list
+        Returns:
+            ListNode: Linked list object
+        """
+        # Initializes the carry variable.
+        carry = 0
+        head = ListNode(0)
+        p1 = head
+
+        # Continues summation until there is no carry or further values.
+        while l1 or l2 or carry:
+            
+            # Adds the two integer values and traverses to the next node.
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
+
+            # Special case if there is a carry.
+            if carry >= 10:
+                node = ListNode(carry%10)
+                p1.next = node
+                carry = 1
+                p1 = p1.next
+
+            else:
+                node = ListNode(carry)
+                p1.next = node
+                carry = 0
+                p1 = p1.next
+
+        return head.next
         
 
 class LinkedList:
@@ -325,41 +398,6 @@ class LinkedList:
         head.next = prev
 
         return self.reverseRecur(temp, head)
-
-    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        """
-        You are given two non-empty linked lists representing two non-negative integers. 
-        The digits are stored in reverse order and each of their nodes contain a single 
-        digit. Add the two numbers and return it as a linked list.
-        Args:
-            l1 (ListNode): first node in the list
-            l2 (ListNode): first node in the second list
-        Returns:
-            ListNode: Linked list object
-        """
-        # Initializes the carry variable.
-        carry = 0
-
-        # Continues summation until there is no carry or further values.
-        while l1 or l2 or carry:
-            
-            # Adds the two integer values and traverses to the next node.
-            if l1:
-                carry += l1.val
-                l1 = l1.next
-            if l2:
-                carry += l2.val
-                l2 = l2.next
-
-            # Special case if there is a carry.
-            if carry >= 10:
-                self.add_front(carry%10)
-                carry = 1
-
-            else: 
-                self.add_front(carry)
-                carry = 0
-        return lst3
 
     def length(self) -> int:
         """
@@ -502,17 +540,26 @@ if __name__ == "__main__":
     # node3.next = node4
     
     # Tests the palindrome method: result is False
-    lst = ListNode('a')
-    node1 = ListNode('x')
-    node2 = ListNode('h')
-    node3 = ListNode('s')
-    node4 = ListNode('a')
-    lst.next = node1
-    node1.next = node2
-    node2.next = node3
-    node3.next = node4
+    # lst = ListNode('a')
+    # node1 = ListNode('x')
+    # node2 = ListNode('h')
+    # node3 = ListNode('s')
+    # node4 = ListNode('a')
+    # lst.next = node1
+    # node1.next = node2
+    # node2.next = node3
+    # node3.next = node4
 
-    sol = Solution()
-    print(sol.palindrome(lst))
+    # sol = Solution()
+    # print(sol.palindrome(lst))
 
+    # # Swap Nodes in Pairs
+    # sol = Solution()
+    # n1 = ListNode(1)
+    # n2 = ListNode(2)
+    # n3 = ListNode(3)
 
+    # n1.next = n2
+    # n2.next = n3
+    # print(n1)
+    # print("Swapped:", sol.swapNodesInPairs(n1))
