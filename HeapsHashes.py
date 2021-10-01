@@ -6,8 +6,7 @@
 # Implement in code, Recheck/Reflect, Evaluate your solution's time and space complexity.
 
 # Hash Table Problem Solving Options
-# 1. Use for quick access to keys or values. O(1) for lookup, insertion, and deletion, worst
-#    case is O(n) due to collisions.
+# 1. Use for quick access to keys or values. O(1) for lookup, insertion, and deletion, worst case is O(n) due to collisions.
 
 # Heap Problem Solving Options
 # 1. Use when you only need the top k most/least frequent occurrences and when fast lookup,
@@ -323,8 +322,8 @@ if __name__ == "__main__":
     # print(min_heap)
     
     # # Tests isIsomorphic method
-    # print(sol.isIsomorphic("foo", "bar"))
-    # print(sol.isIsomorphic("paper", "title"))
+    print(sol.isIsomorphic("foo", "bar"))
+    print(sol.isIsomorphic("paper", "title"))
 
 
     # # Tests isHappy method
