@@ -16,6 +16,7 @@
 
 
 import heapq
+from collections import Counter
 
 class Solution:
 
@@ -244,6 +245,44 @@ class Solution:
             
         return result
 
+    def findKAnagrams(self, name, restaurants, k):
+        """
+        Given a restaurant name, find other restaurants in the list that are k-anagrams 
+        with each other. A name is a k-anagram with another name if both the conditions 
+        below are true: The names contain the same number of characters. The names can 
+        be turned into anagrams by changing at most k characters in the string
+
+        Args:
+            name (string): name of restaurant
+            restaurants (list): list of restaurant names to compare
+            k (int): num of swappable letters
+
+        Returns:
+            list: list of restaurant names that meet the criteria
+        """
+        length = len(name)
+        counterN = Counter(name)
+        counterR = Counter()
+        res = 0
+        answer = []
+        
+        for restaurant in restaurants:
+            if len(restaurant) == length:
+                
+                for c in restaurant:
+                    if c in counterN and counterR[c] < counterN[c]: 
+                        counterR[c] += 1
+                    else: 
+                        res += 1
+                
+                if res <= k:
+                    answer.append(restaurant)
+                
+            counterR.clear()
+            res = 0
+            
+        return answer
+
 
 class MinHeap:
     def __init__(self, start_heap=None):
@@ -321,9 +360,9 @@ if __name__ == "__main__":
     # min_heap.insert(2)
     # print(min_heap)
     
-    # # Tests isIsomorphic method
-    print(sol.isIsomorphic("foo", "bar"))
-    print(sol.isIsomorphic("paper", "title"))
+    # Tests isIsomorphic method
+    # print(sol.isIsomorphic("foo", "bar"))
+    # print(sol.isIsomorphic("paper", "title"))
 
 
     # # Tests isHappy method
@@ -354,8 +393,33 @@ if __name__ == "__main__":
     # print(sol.sort_list([3, 2, 1, 4, 6, 5], 3))
 
     # Tests Array Manipulation method.
-    queries = [[1, 1, 0], [1, 2, 5], [3, 4, 100]]
-    print(sol.arrayManipulation(3, queries))
+    # queries = [[1, 1, 0], [1, 2, 5], [3, 4, 100]]
+    # print(sol.arrayManipulation(3, queries))
+
+    # Tests FindKAnangrams Method
+    # input = "anagram"
+    # list = ["grammar", "grammer", "anagram"]
+    # K = 2
+    # print(sol.findKAnagrams(input, list, K))
+    # print(["grammar", "anagram"])
+
+    # input = "anagram"
+    # list = ["grammar"]
+    # K = 3
+    # print(sol.findKAnagrams(input, list, K))
+    # print(["grammar"])
+
+    # input = "anagram"
+    # list = ["grammar"]
+    # K = 1
+    # print(sol.findKAnagrams(input, list, K))
+    # print([])
+
+    # input = "omexyb grillg"
+    # list = ["omgxca grille"]
+    # K = 2
+    # print(sol.findKAnagrams(input, list, K))
+    # print(["omgxca grille"])
 
     # # HackerRank alternate approach in the main() function
     # heap = []
